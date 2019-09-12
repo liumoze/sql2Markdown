@@ -143,11 +143,19 @@ public class makeMarkdown {
 		    //组织输出md文件内容
 		    String text = "# 数据库文档\n\n";
 		    text += "## 数据表列表\n\n";
+		    String table_desstr = "";   //表描述
 		    for (int i = 0; i < table_section_map.size(); i++) {
+		    	table_desstr = table_description_map.get("table"+i);
 		    	String tablenamestr = table_name_map.get("table"+i);
-		    	text += "## 表名："+tablenamestr+"\n\n";
+		    	if (table_desstr != null) {
+		    		text += "## 表名："+tablenamestr+"("+table_description_map.get("table"+i)+")\n\n";
+				}else {
+					text += "## 表名："+tablenamestr+"\n\n";
+				}
+		    	
+		    	//text += "## 表名："+tablenamestr+"("+table_description_map.get("table"+i)+")\n\n";
 		    	text += "字段名|数据类型|字段描述\n";
-		    	text += ":---|:---|:---\n";
+		    	text += ":---:|:---:|:---:\n";
 		    	String[] rownames = row_name_map.get("table"+i).split(",");
 		    	String[] rowtypes = map_row_type.get("table"+i).split(",");
 		    	String[] rowdes = map_row_description.get("table"+i).split(",");
@@ -168,9 +176,9 @@ public class makeMarkdown {
 		    System.out.println("表描述"+table_description_map);
 		    
 		   	//文件输出  
-		   /* fileWriter =  new FileWriter("E:\\a.md",false);
+		   fileWriter =  new FileWriter("E:\\a.md",false);
 		    fileWriter.write(text);
-		    fileWriter.close();*/
+		    fileWriter.close();
      
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
